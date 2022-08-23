@@ -9,8 +9,8 @@ export default function Home() {
       <TextHeader />
       <div className="flex flex-col md:flex-row grow md:justify-around">
         {/* Left column */}
-        <div className="px-10 py-2">
-          <Image src={screen} alt="Screenshot of GetHalal" />
+        <div className="px-10 py-2 drop-shadow-2xl">
+          <Image src={screen} alt="Screenshot of GetHalal"/>
         </div>
 
         {/* Right column */}
@@ -40,7 +40,7 @@ const TextHeader = () => {
 
 const SignUpForm = () => {
   return (
-    <div>
+    <div className="p-2 rounded-md">
       <div className="flex flex-col my-4">
         <text className="text-xl md:text-4xl font-semibold">Be the first to know when GetHalal is available.</text>
         <InputField placeholder="Enter your email"/>
@@ -48,6 +48,7 @@ const SignUpForm = () => {
       <div className="flex flex-col">
         <div>
           <text className="font-semibold">We want to be ready for you! </text>
+          <br/>
           <text>Share your city and we can make sure there are restaurants near you!</text>
         </div>
         <InputField placeholder="Enter your city"/>
