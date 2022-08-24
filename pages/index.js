@@ -20,6 +20,7 @@ export default function Home() {
       </div>
       <Divider />
       {/* Feature columns go here? */}
+      <ContentGrid />
     </Layout>
   )
 }
@@ -27,7 +28,7 @@ export default function Home() {
 const TextHeader = () => {
   return (
     <div className="text-center my-2 md:my-10">
-      <text className="text-4xl font-semibold">Find Halal Restaurants quick</text>
+      <text className="text-4xl font-semibold">Find halal restaurants quick</text>
       <br />
       <div className="font-light text-2xl">
         <text>Easy to use, no tracking.</text>
@@ -77,5 +78,31 @@ const StyledButton = ({ title, color, className}) => {
 const Divider = () => {
   return(
     <div style={{height: 1, width: 'auto', backgroundColor: 'gray', opacity: '30%'}} className="my-3"></div>
+  )
+}
+
+const ContentGrid = () => {
+  return (
+    <div className="grid gap-16 grid-cols-1 md:grid-cols-3">
+      <ImageCard imageSrc={screen} alt={'A pic of GetHalal'} title='Location'>
+        <text>This is a brief description of what is happening in the screenshot</text>
+      </ImageCard>
+      <ImageCard imageSrc={screen} alt={'A pic of GetHalal'} title='Location'>
+        <text>This is a brief description of what is happening in the screenshot</text>
+      </ImageCard>
+      <ImageCard imageSrc={screen} alt={'A pic of GetHalal'} title='Location'>
+        <text>This is a brief description of what is happening in the screenshot</text>
+      </ImageCard>
+    </div>
+  )
+}
+
+const ImageCard = ({ imageSrc, alt, children, title}) => {
+  return (
+    <div className="flex flex-col rounded-lg items-center">
+      <text className="text-4xl font-semibold my-2">{title}</text>
+      <text className="text-sm mb-2">{children}</text>
+      <Image src={imageSrc} alt={alt} className='w-72'/>
+    </div>
   )
 }
