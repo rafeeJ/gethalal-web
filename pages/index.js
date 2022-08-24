@@ -28,7 +28,7 @@ export default function Home() {
 const TextHeader = () => {
   return (
     <div className="text-center my-2 md:my-10">
-      <text className="text-4xl font-semibold">Find halal restaurants quick</text>
+      <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants quick</text>
       <br />
       <div className="font-light text-2xl">
         <text>Easy to use, no tracking.</text>
@@ -83,7 +83,7 @@ const Divider = () => {
 
 const ContentGrid = () => {
   return (
-    <div className="grid gap-16 grid-cols-1 md:grid-cols-3">
+    <div className="grid gap-8 md:gap-16 grid-cols-1 md:grid-cols-3">
       <ImageCard imageSrc={screen} alt={'A pic of GetHalal'} title='Location'>
         <text>This is a brief description of what is happening in the screenshot</text>
       </ImageCard>
@@ -102,7 +102,7 @@ const ImageCard = ({ imageSrc, alt, children, title}) => {
     <div className="flex flex-col rounded-lg items-center">
       <text className="text-4xl font-semibold my-2">{title}</text>
       <text className="text-sm mb-2">{children}</text>
-      <Image src={imageSrc} alt={alt} className='w-72'/>
+      <Image src={imageSrc} alt={alt} className='w-48 md:w-72'/>
     </div>
   )
 }
