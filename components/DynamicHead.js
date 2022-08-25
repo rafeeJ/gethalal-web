@@ -4,14 +4,11 @@ import { useRouter } from 'next/router'
 
 export default function DynamicHead() {
     const router = useRouter()
-    const currentUrl = `https://rafeejenkins.com${router.asPath}`
-  
-    var path = router.asPath;
+    const currentUrl = `https://gethalal.app${router.asPath}`
     
     const meta = {
       title: `GetHalal | Time for Dinner`,
       description: `GetHalal - Sign up to our mailing list!`,
-      //image: 'https://avatars1.githubusercontent.com/u/1508676?s=460&u=b2e51a0ca47547585614685cec42a1c16955986c&v=4',
       type: "website",
     };
 
@@ -30,7 +27,7 @@ export default function DynamicHead() {
             href={currentUrl}
           />
           <meta property="og:type" content={meta.type} />
-          <meta property="og:site_name" content="Rafee J. Jenkins" />
+          <meta property="og:site_name" content="GetHalal" />
           <meta property="og:description" content={meta.description} key="desc"/>
           <meta property="og:title" content={meta.title} />
           <meta property="og:image" content={meta.image} />
