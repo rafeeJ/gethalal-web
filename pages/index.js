@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 
 import screen from "../public/phone_images/screen.png"
 
+import mapview from '../public/phone_images/mapview-phone.png'
 import filterview from '../public/phone_images/filterview-phone.png'
 import listview from '../public/phone_images/listview-phone.png'
 import locationview from '../public/phone_images/locationview-phone.png'
@@ -14,11 +15,11 @@ export default function Home() {
       <div className="flex flex-col md:flex-row md:justify-center">
         {/* Left column */}
         <div className="px-10 py-2 md:mr-48">
-          <Image src={screen} alt="Screenshot of GetHalal" />
+          <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72"/>
         </div>
 
         {/* Right column */}
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center md:pl-4">
           <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" />
           <SignUpForm />
         </div>
@@ -32,7 +33,7 @@ export default function Home() {
 
 const TextHeader = () => {
   return (
-    <div className="text-center my-2 md:my-10">
+    <div className="text-center my-2 md:my-4">
       <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants quick</text>
       <br />
       <div className="font-light text-2xl">
@@ -55,7 +56,7 @@ const Blurb = ({ className }) => {
 
 const SignUpForm = () => {
   return (
-    <div className="rounded-md md:pb-40 text-center md:text-left">
+    <div className="rounded-md md:pb-16 text-center md:text-left">
       <div className="flex flex-col my-4">
         <text className="text-xl md:text-3xl font-semibold">Be the first to know when GetHalal is available.</text>
         <InputField placeholder="Enter your email" ratio={'2/3'} />
@@ -64,7 +65,7 @@ const SignUpForm = () => {
         <div>
           <text className="text-lg md:text-xl font-semibold">We want to be ready for you!</text>
           <br />
-          <text>Share your city and we can make sure there are restaurants near you! <br /> <text className="font-semibold"> (This is optional!)</text></text>
+          <text>Share your city and we can make sure to gather restaurants near you.<br /> <text className="font-semibold"> (This is optional.)</text></text>
         </div>
         <InputField placeholder="Enter your city" />
       </div>
@@ -119,13 +120,13 @@ const ContentGrid = () => {
   return (
     <div className="grid gap-8 md:gap-16 grid-cols-1 md:grid-cols-3">
       <ImageCard imageSrc={listview} alt={'A pic of GetHalal'} title='Info at a glance'>
-        <text>Check out a restaurant's Google rating and what they serve from the list view.</text>
+        <text>Check out a restaurant&apos;s Google rating and what they serve from the list view.</text>
       </ImageCard>
       <ImageCard imageSrc={filterview} alt={'A pic of GetHalal'} title='Precise filtering'>
         <text>You can filter restaurants so you know what to expect!</text>
       </ImageCard>
       <ImageCard imageSrc={locationview} alt={'A pic of GetHalal'} title='Location optional'>
-        <text>Search for restaurants around you, or simply type in a location to see what's there.</text>
+        <text>Search for restaurants around you, or simply type in a location to see what&apos;s there.</text>
       </ImageCard>
     </div>
   )
