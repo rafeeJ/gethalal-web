@@ -3,6 +3,10 @@ import Layout from "../components/Layout";
 
 import screen from "../public/phone_images/screen.png"
 
+import filterview from '../public/phone_images/filterview-phone.png'
+import listview from '../public/phone_images/listview-phone.png'
+import locationview from '../public/phone_images/locationview-phone.png'
+
 export default function Home() {
   return (
     <Layout>
@@ -114,14 +118,14 @@ const Divider = () => {
 const ContentGrid = () => {
   return (
     <div className="grid gap-8 md:gap-16 grid-cols-1 md:grid-cols-3">
-      <ImageCard imageSrc={screen} alt={'A pic of GetHalal'} title='Location'>
-        <text>This is a brief description of what is happening in the screenshot</text>
+      <ImageCard imageSrc={listview} alt={'A pic of GetHalal'} title='Info at a glance'>
+        <text>Check out a restaurant's Google rating and what they serve from the list view.</text>
       </ImageCard>
-      <ImageCard imageSrc={screen} alt={'A pic of GetHalal'} title='Location'>
-        <text>This is a brief description of what is happening in the screenshot</text>
+      <ImageCard imageSrc={filterview} alt={'A pic of GetHalal'} title='Precise filtering'>
+        <text>You can filter restaurants so you know what to expect!</text>
       </ImageCard>
-      <ImageCard imageSrc={screen} alt={'A pic of GetHalal'} title='Location'>
-        <text>This is a brief description of what is happening in the screenshot</text>
+      <ImageCard imageSrc={locationview} alt={'A pic of GetHalal'} title='Location optional'>
+        <text>Search for restaurants around you, or simply type in a location to see what's there.</text>
       </ImageCard>
     </div>
   )
