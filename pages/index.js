@@ -1,14 +1,15 @@
 import Image from "next/future/image";
 import Layout from "../components/Layout";
 
-import screen from "../public/phone_images/screen.png"
 
-import mapview from '../public/phone_images/mapview-phone.png'
-import filterview from '../public/phone_images/filterview-phone.png'
-import listview from '../public/phone_images/listview-phone.png'
-import locationview from '../public/phone_images/locationview-phone.png'
+import { logEvent } from "firebase/analytics";
 import { useRef, useState } from "react";
 import { RegionDropdown } from "react-country-region-selector";
+import { analytics } from "../firebase/clientApp";
+import filterview from '../public/phone_images/filterview-phone.png';
+import listview from '../public/phone_images/listview-phone.png';
+import locationview from '../public/phone_images/locationview-phone.png';
+import mapview from '../public/phone_images/mapview-phone.png';
 
 export default function Home() {
   return (
@@ -91,6 +92,8 @@ const SignUpForm = () => {
     emailInput.current.value = '';
     setRegion('')
     setErrorMessage('Success! 🎉 You are now subscribed to the newsletter.');
+
+    logEvent(analytics, 'sign_up')
   }
 
 
