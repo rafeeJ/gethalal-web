@@ -12,15 +12,17 @@ export default async function handler (req, res)  {
     return res.status(400).json({ error: 'Email is required' });
   }
 
+  var memberToAdd = {
+    email_address: email,
+    status: 'subscribed',
+    ...(city) && {tags: [city]}
+  }
+
   try {
-    await mailchimp.lists.addListMember(process.env.MAILCHIMP_AUDIENCE_ID, {
-      email_address: email,
-      tags: [city],
-      status: 'subscribed'
-    });
+    await mailchimp.lists.addListMember(process.env.MAILCHIMP_AUDIENCE_ID, memberToAdd);
 
     return res.status(201).json({ error: '' });
   } catch (error) {
-    return res.status(500).json({ error: error.message || error.toString() });
+    return res.status(500).json({ error: error.response.body.title || error.toString() });
   }
 };

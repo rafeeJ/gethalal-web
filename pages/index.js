@@ -59,7 +59,7 @@ const Blurb = ({ className }) => {
 const SignUpForm = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [region, setRegion] = useState(null)
+  const [region, setRegion] = useState('')
 
   const emailInput = useRef(null)
   const cityInput = useRef(null)
@@ -89,7 +89,7 @@ const SignUpForm = () => {
 
     // 5. Clear the input value and show a success message.
     emailInput.current.value = '';
-    setRegion(null)
+    setRegion('')
     setErrorMessage('Success! 🎉 You are now subscribed to the newsletter.');
   }
 
