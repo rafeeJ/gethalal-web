@@ -7,6 +7,8 @@ import mapview from '../public/phone_images/mapview-phone.png'
 import filterview from '../public/phone_images/filterview-phone.png'
 import listview from '../public/phone_images/listview-phone.png'
 import locationview from '../public/phone_images/locationview-phone.png'
+import { useRef, useState } from "react";
+import { RegionDropdown } from "react-country-region-selector";
 
 export default function Home() {
   return (
@@ -15,12 +17,12 @@ export default function Home() {
       <div className="flex flex-col md:flex-row md:justify-center">
         {/* Left column */}
         <div className="px-10 py-2 md:mr-48">
-          <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72"/>
+          <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72" />
         </div>
 
         {/* Right column */}
         <div className="flex flex-col justify-center md:pl-4">
-          <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" />
+          {/* <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" /> */}
           <SignUpForm />
         </div>
       </div>
@@ -55,56 +57,99 @@ const Blurb = ({ className }) => {
 }
 
 const SignUpForm = () => {
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const [region, setRegion] = useState('')
+
+  const emailInput = useRef(null)
+  const cityInput = useRef(null)
+
+  const subscribe = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch('/api/subscribe', {
+      body: JSON.stringify({
+        email: emailInput.current.value,
+        city: region
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    });
+
+    const { error } = await res.json();
+
+    if (error) {
+      // 4. If there was an error, update the message in state.
+      setErrorMessage(error);
+
+      return;
+    }
+
+    // 5. Clear the input value and show a success message.
+    emailInput.current.value = '';
+    setRegion('')
+    setErrorMessage('Success! 🎉 You are now subscribed to the newsletter.');
+  }
+
+
   return (
-    <div className="rounded-md md:pb-16 text-center md:text-left">
+    <form onSubmit={subscribe} className="rounded-md md:pb-16 text-center md:text-left">
       <div className="flex flex-col my-4">
         <text className="text-xl md:text-3xl font-semibold">Be the first to know when GetHalal is available.</text>
-        <InputField placeholder="Enter your email" ratio={'2/3'} />
+      
+        <text>Share your email and we will send you a message when GetHalal is released!</text>
+        <input
+          className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+          id="email-input"
+          name="email"
+          placeholder="you@awesome.com"
+          ref={emailInput}
+          required
+          type="email" />
       </div>
       <div className="flex flex-col">
         <div>
           <text className="text-lg md:text-xl font-semibold">We want to be ready for you!</text>
           <br />
-          <text>Share your city and we can make sure to gather restaurants near you.<br /> <text className="font-semibold"> (This is optional.)</text></text>
+          <text>Share your region and we can make sure to gather restaurants near you.<br /> <text className="font-semibold"> (This is optional.)</text></text>
         </div>
-        <InputField placeholder="Enter your city" />
+        <RegionDropdown
+        className="shadow border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+        country="United Kingdom"
+        value={region}
+        onChange={(val) => setRegion(val)}/>
+        {/* <input
+          className="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+          id="city-input"
+          name="city"
+          placeholder="Manchester, London ..."
+          ref={cityInput}
+          type="city" /> */}
       </div>
-      {/* <StyledButton title="Submit" className="my-4 bg-yellow-200 mx-auto md:mx-0 animate-pulse" /> */}
-      <div className="flex">
-        <PulseButton title="Submit" className="bg-yellow-200" />
+
+      <div className="font-mono mt-2">
+        {errorMessage
+          ? errorMessage
+          : `We will only send emails when there are new updates. No spam.`}
       </div>
-    </div>
+      <a className="flex" type="submit">
+        <PulseButton title="Submit" className="bg-yellow-200"/>
+      </a>
+    </form>
   )
 }
 
-const InputField = ({ placeholder, ratio }) => {
-  var remainder
-  if (ratio) {
-    let t = ratio.split('/')
-    let numerator = parseInt(t[0])
-    let denominator = parseInt(t[1])
-    remainder = `${denominator - numerator}/${denominator}`
-  }
-
-  return (
-    <div className="flex flex-row">
-      <div className={`rounded-lg p-1.5 bg-white flex border-2 border-black mt-2 w-screen ${ratio ? 'md:w-' + ratio : 'md:w-1/3'}`}>
-        <input className="grow" placeholder={placeholder} style={{ backgroundColor: 'transparent' }} />
-      </div>
-      {/* <div className={`${ratio ? 'w-' + remainder : 'grow'}`} /> */}
-    </div>
-  )
-}
-
-const PulseButton = ({title, className}) => {
+const PulseButton = ({ title, className, type}) => {
   return (
     <div id="ping" className={`relative py-1 my-4`}>
-      <div className="absolute w-2 h-2 -right-0.5 top-0.5">
+      {/* <div className="absolute w-2 h-2 -right-0.5 top-0.5">
         <div className="w-2 h-2 bg-red-400 animate-ping absolute rounded-full"></div>
         <div className="w-2 h-2 bg-red-500 absolute rounded-full"></div>
-      </div>
-      <div id="button" className={`border-2 border-black px-8 py-1 rounded-lg ${className}`}>
-        <button>{title}</button>
+      </div> */}
+      <div id="button" className={`flex border rounded-lg shadow appearance-none ${className}`}>
+        <button className="grow px-8 py-1">{title}</button>
       </div>
     </div>
   )
