@@ -37,7 +37,7 @@ export default function Home() {
 const TextHeader = () => {
   return (
     <div className="text-center my-2 md:my-4">
-      <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <text className="font-bold">fast.</text></text>
+      <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <text className="font-bold">Fast.</text></text>
       <br />
       <div className="font-light text-2xl">
         <text>Easy to use, no tracking.</text>
