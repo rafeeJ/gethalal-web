@@ -23,6 +23,5 @@ export default async function handler (req, res)  {
 
     return res.status(201).json({ error: '' });
   } catch (error) {
-    return res.status(500).json({ error: error.response.body.title || error.toString() });
-  }
+    return res.status(500).json({ error: error.message || error.toString() });  }
 };
