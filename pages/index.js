@@ -37,7 +37,7 @@ export default function Home() {
 const TextHeader = () => {
   return (
     <div className="text-center my-2 md:my-4">
-      <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants quick</text>
+      <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <text className="font-bold">fast.</text></text>
       <br />
       <div className="font-light text-2xl">
         <text>Easy to use, no tracking.</text>
@@ -104,7 +104,7 @@ const SignUpForm = () => {
       
         <text>Share your email and we will send you a message when GetHalal is released!</text>
         <input
-          className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+          className="shadow appearance-none border rounded md:w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
           id="email-input"
           name="email"
           placeholder="you@awesome.com"
@@ -119,17 +119,10 @@ const SignUpForm = () => {
           <text>Share your region and we can make sure to gather restaurants near you.<br /> <text className="font-semibold"> (This is optional.)</text></text>
         </div>
         <RegionDropdown
-        className="shadow border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+        className="shadow border rounded md:w-2/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
         country="United Kingdom"
         value={region}
         onChange={(val) => setRegion(val)}/>
-        {/* <input
-          className="shadow appearance-none border rounded w-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
-          id="city-input"
-          name="city"
-          placeholder="Manchester, London ..."
-          ref={cityInput}
-          type="city" /> */}
       </div>
 
       <div className="font-mono mt-2">
