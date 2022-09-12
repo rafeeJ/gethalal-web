@@ -130,7 +130,7 @@ const SignUpForm = () => {
           ? errorMessage
           : `We will only send emails when there are new updates. No spam.`}
       </div>
-      <a className="flex" type="submit">
+      <a className="flex" type="submit" style={{WebkitAppearance: 'none', Appearance: 'none', MozAppearance: 'none'}}>
         <PulseButton title="Submit" className="bg-yellow-200"/>
       </a>
     </form>
