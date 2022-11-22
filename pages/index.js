@@ -6,6 +6,9 @@ import { logEvent } from "firebase/analytics";
 import { useRef, useState } from "react";
 import { RegionDropdown } from "react-country-region-selector";
 import { analytics } from "../firebase/clientApp";
+
+import ReactStoreBadges from "react-store-badges"
+
 import filterview from '../public/phone_images/filterview-phone.png';
 import listview from '../public/phone_images/listview-phone.png';
 import locationview from '../public/phone_images/locationview-phone.png';
@@ -100,9 +103,14 @@ const SignUpForm = () => {
   return (
     <form onSubmit={subscribe} className="rounded-md md:pb-16 text-center md:text-left">
       <div className="flex flex-col my-4">
-        <text className="text-xl md:text-3xl font-semibold">Be the first to know when GetHalal is available.</text>
-      
-        <text>Share your email and we will send you a message when GetHalal is released!</text>
+        <text className="text-xl md:text-3xl font-semibold">GetHalal is available now!</text>
+        <div className="flex md:py-2 md:mb-5 justify-center md:justify-start" onClick={() => logEvent(analytics, 'app_link_clicked')}>
+        <ReactStoreBadges 
+        platform={'ios'}
+        url={'https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257'}
+        locale={'en-us'}/>
+        </div>
+        <text >Stay in the loop! Sign up to our mailing list.</text>
         <input
           className="shadow appearance-none border rounded md:w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
           id="email-input"
