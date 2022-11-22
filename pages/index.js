@@ -104,7 +104,7 @@ const SignUpForm = () => {
     <form onSubmit={subscribe} className="rounded-md md:pb-16 text-center md:text-left">
       <div className="flex flex-col my-4">
         <text className="text-xl md:text-3xl font-semibold">GetHalal is available now!</text>
-        <div className="md:py-2">
+        <div className="flex md:py-2 md:mb-5 justify-center md:justify-start" onClick={() => logEvent(analytics, 'app_link_clicked')}>
         <ReactStoreBadges 
         platform={'ios'}
         url={'https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257'}
