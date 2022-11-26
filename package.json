@@ -16,6 +16,7 @@
     "react": "18.2.0",
     "react-country-region-selector": "^3.6.1",
     "react-dom": "18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-store-badges": "^1.5.1"
   },
   "devDependencies": {

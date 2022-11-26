@@ -20,17 +20,19 @@ const MapComponentTest = ({ zoom, center }) => {
     return <div className='w-80 h-80' ref={ref} id="map" />;
 };
 
-export default function RestaurantCard() {
+export default function RestaurantCard({ restaurant }) {
 
     const center = { lat: -34.397, lng: 150.644 };
     const zoom = 4;
 
     return (
-        <div className='inline-flex flex-row bg-white justify-center p-5 rounded-xl'>
+        <div className='inline-flex flex-row bg-white justify-center p-5 rounded-xl shadow-2xl'>
             <Wrapper apiKey={process.env.GOOGLE_MAPS_API} render={render}>
-                <MapComponentTest center={center} zoom={zoom} />
+                <MapComponentTest center={center} zoom={zoom} /> 
             </Wrapper>
-            <div className='w-80 h-80 bg-green-600' />
+            <div className='w-80 h-80 bg-green-600 rounded-r-xl'>
+                {restaurant?.name}
+            </div>
         </div>
     )
 }
