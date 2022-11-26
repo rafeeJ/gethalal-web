@@ -1,35 +1,24 @@
-import { Status, Wrapper } from '@googlemaps/react-wrapper'
-import React, { useEffect, useRef } from 'react'
+import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
+import React from 'react';
 
-const render = (status) => {
-    if (status === Status.LOADING) return <h3>{status} ..</h3>;
-    if (status === Status.FAILURE) return <h3>{status} ...</h3>;
-    return null;
-};
+const Map = ({ marker }) => {
+    const center = {lat: marker.lat, lng: marker.lng}
+    
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.GOOGLE_MAPS_API, })
 
-const MapComponentTest = ({ zoom, center }) => {
-    const ref = useRef();
-
-    useEffect(() => {
-        new window.google.maps.Map(ref.current, {
-            center,
-            zoom,
-        });
-    });
-
-    return <div className='w-80 h-80' ref={ref} id="map" />;
-};
+    if (!isLoaded) {
+        return (<div>Loading</div>)
+    }
+    return (
+    <GoogleMap zoom={12} center={center} mapContainerClassName="w-80 h-80">
+        <MarkerF position={center} />
+    </GoogleMap>)
+}
 
 export default function RestaurantCard({ restaurant }) {
-
-    const center = { lat: -34.397, lng: 150.644 };
-    const zoom = 4;
-
     return (
-        <div className='inline-flex flex-row bg-white justify-center p-5 rounded-xl shadow-2xl'>
-            <Wrapper apiKey={process.env.GOOGLE_MAPS_API} render={render}>
-                <MapComponentTest center={center} zoom={zoom} /> 
-            </Wrapper>
+        <div className='inline-flex flex-col md:flex-row bg-white justify-center p-5 rounded-xl shadow-2xl'>
+            <Map marker={restaurant?.geometry?.location} />
             <div className='w-80 h-80 bg-green-600 rounded-r-xl'>
                 {restaurant?.name}
             </div>
