@@ -24,6 +24,7 @@ export default function RestaurantPage() {
 
   return (
     <Layout>
+      <div className='md:py-8'>
       {
         loading ? <></> :
           <div className='flex justify-center'>
@@ -33,6 +34,7 @@ export default function RestaurantPage() {
             }
           </div>
       }
+      </div>
     </Layout>);
 
 }

@@ -12,11 +12,13 @@
     "@mailchimp/mailchimp_marketing": "^3.0.78",
     "@react-google-maps/api": "^2.17.0",
     "firebase": "^9.9.4",
+    "lodash": "^4.17.21",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-country-region-selector": "^3.6.1",
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-icons": "^4.6.0",
     "react-store-badges": "^1.5.1"
   },
   "devDependencies": {
