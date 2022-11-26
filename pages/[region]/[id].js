@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from '../../components/Layout';
 import RestaurantCard from '../../components/RestaurantCard';
 import { doc } from 'firebase/firestore';
@@ -18,22 +18,25 @@ export default function RestaurantPage() {
       null, { initLoading: true }
   )
 
-  if (error) {
-    <div>{error}</div>
+  if (loading) {
+    return(
+      <Layout>
+        <div>Loading</div>
+      </Layout>
+
+    )
   }
 
   return (
     <Layout>
       <div className='md:py-8'>
-      {
-        loading ? <></> :
-          <div className='flex justify-center'>
+        <div className='flex justify-center'>
             {
-              restaurant &&
-              <RestaurantCard restaurant={restaurant.data()} />
+              restaurant ? 
+              restaurant.exists() ? <RestaurantCard restaurant={restaurant.data()} /> : <div>Restaurant Doesnt exist</div> :
+              <div>Somethign down here</div>
             }
           </div>
-      }
       </div>
     </Layout>);
 

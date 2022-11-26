@@ -109,7 +109,7 @@ export default function RestaurantCard({ restaurant }) {
                 <RestaurantInfo fullHalal={restaurant?.fullHalal} servesAlcohol={restaurant?.servesAlcohol} />
                 <CategoryRows categories={restaurant?.categories} />
                 <PulseButton title='Visit their Website' pulse={false} url={restaurant?.website}/>
-                <PulseButton title='Find out more in the app' color={'#84AF83'}/>
+                <PulseButton title='Find more restaurants in our app' color={'#84AF83'} url={'https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257'}/>
             </div>
         </div>
     )
