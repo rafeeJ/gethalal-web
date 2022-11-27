@@ -1,15 +1,14 @@
-import { collection } from 'firebase/firestore';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react'
-import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
-import Layout from '../../components/Layout'
-import { db } from '../../firebase/clientApp';
-import PacmanLoader from 'react-spinners/PacmanLoader';
-import RegionCard from '../../components/RegionCard';
-import Head from "next/head";
+import { collection, getDocs } from 'firebase/firestore';
 import { startCase } from 'lodash';
+import Head from "next/head";
+import { useRouter } from 'next/router';
+import React from 'react';
+import PacmanLoader from 'react-spinners/PacmanLoader';
+import Layout from '../../components/Layout';
+import RegionCard from '../../components/RegionCard';
+import { db } from '../../firebase/clientApp';
 
-const HeadContent = ({region}) => {
+const HeadContent = ({ region }) => {
     const router = useRouter()
     const currentUrl = `https://gethalal.app${router.asPath}`
 
@@ -17,7 +16,7 @@ const HeadContent = ({region}) => {
         title: `GetHalal | Restaurants in ${startCase(region)}`,
         description: `Find halal restaurants in ${startCase(region)}`,
         type: "website",
-      };
+    };
 
     return (
         <Head>
@@ -40,19 +39,13 @@ const HeadContent = ({region}) => {
     )
 }
 
-export default function Region() {
-    const router = useRouter();
+export default function Region({ restaurants }) {
+    const router = useRouter()
     const {
         query: { region },
     } = router;
 
-    const [restaurants, loading, error, snapshot] = useCollectionDataOnce(
-        region ?
-            collection(db, `regions/${region}/restaurants`) :
-            null, { initialValue: null }
-    )
-
-    if (loading) {
+    if (!restaurants) {
         return (
             <Layout>
                 <PacmanLoader color="#36d7b7" />
@@ -61,18 +54,35 @@ export default function Region() {
     }
 
     return (
-        <Layout head={<HeadContent region={region}/>}>
+        <Layout head={<HeadContent region={region} />}>
             <div className='flex justify-center'>
-
-                {
-                    restaurants ?
-                        restaurants.length > 0 ?
-                            <RegionCard restaurants={restaurants} />
-                            :
-                            <>Not a valid region</> :
-                        <PacmanLoader color="#36d7b7" />
-                }
+                <RegionCard restaurants={restaurants} />
             </div>
         </Layout>
     )
+}
+
+
+export const getServerSideProps = async ({ params }) => {
+    const region = params.region
+
+    const rs = await getDocs(collection(db, `regions/${region}/restaurants`))
+    const restaurantData = []
+    rs.forEach((doc) => {
+        restaurantData.push(doc.data())
+    })
+
+    if (restaurantData) {
+        return {
+            props: {
+                restaurants: restaurantData
+            }
+        }
+    } else {
+        return {
+            props: {
+                restaurants: null
+            }
+        }
+    }
 }
