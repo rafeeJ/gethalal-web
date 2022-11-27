@@ -15,7 +15,7 @@ const Map = ({ marker }) => {
         return (<div>Loading</div>)
     }
     return (
-        <GoogleMap zoom={12} center={center} mapContainerClassName="w-80 md:w-[30rem] h-80">
+        <GoogleMap zoom={10} center={center} mapContainerClassName="w-80 md:w-[30rem] h-80">
             <MarkerF position={center} />
         </GoogleMap>)
 }
