@@ -14,7 +14,7 @@ const HeadContent = ({ restaurant }) => {
 
   const meta = {
     title: `GetHalal | ${startCase(restaurant)}`,
-    description: `Find halal restaurants in ${startCase(restaurant)}`,
+    description: `Find out more about ${startCase(restaurant)} in the GetHalal app.`,
     type: "website",
   };
 
