@@ -5,6 +5,7 @@ import RestaurantCard from '../../components/RestaurantCard';
 import { doc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase/clientApp';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 
 export default function RestaurantPage() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function RestaurantPage() {
             {
               restaurant ? 
               restaurant.exists() ? <RestaurantCard restaurant={restaurant.data()} /> : <div>Restaurant Doesnt exist</div> :
-              <div>Somethign down here</div>
+              <PacmanLoader color="#36d7b7" />
             }
           </div>
       </div>
