@@ -15,7 +15,7 @@ const Map = ({ marker }) => {
         return (<div>Loading</div>)
     }
     return (
-        <GoogleMap zoom={10} center={center} mapContainerClassName="w-80 md:w-[30rem] h-80">
+        <GoogleMap zoom={15} center={center} mapContainerClassName="w-80 md:w-[30rem] h-[30rem]">
             <MarkerF position={center} />
         </GoogleMap>)
 }
@@ -120,15 +120,16 @@ const handleVisitApp = ( url ) => {
 
 export default function RestaurantCard({ restaurant }) {
     return (
-        <div className='inline-flex flex-col md:flex-row bg-rose-300 justify-center p-5 rounded-xl shadow-2xl'>
+        <div className='inline-flex flex-col md:flex-row bg-white justify-center p-5 rounded-xl shadow-2xl'>
             <Map marker={restaurant?.geometry?.location} />
-            <div className='w-80 h-80 bg-white p-4'>
+            <div className='w-80 bg-white p-4 my-auto'>
+
                 <h1 className='font-serif text-xl text-center'>{restaurant?.name}</h1>
                 <RestaurantInfo fullHalal={restaurant?.fullHalal} servesAlcohol={restaurant?.servesAlcohol} />
                 <CategoryRows categories={restaurant?.categories} />
                 { restaurant.website ? 
                 <PulseButton title='Visit their Website' pulse={false} callback={() => handleVisitWebsite(restaurant.website, restaurant?.name)}/> : <></>
-                }
+            }
                 <PulseButton title='Find out more in the app' color={'#84AF83'} callback={() => handleVisitApp('https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257')}/>
             </div>
         </div>

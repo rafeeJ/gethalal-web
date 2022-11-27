@@ -25,7 +25,7 @@ const Map = ({ points, idx }) => {
         <div>
             {
                 points ?
-                    <GoogleMap center={center} zoom={idx || idx === 0 ? 16 : 9} mapContainerClassName="w-80 md:w-[30rem] h-80 rounded-md">
+                    <GoogleMap center={center} zoom={idx || idx === 0 ? 16 : 9} mapContainerClassName="w-80 md:w-[30rem] h-[30rem] rounded-md">
                         {
                             points.map((point, idx) => {
                                 try {
@@ -58,7 +58,7 @@ export default function RegionCard({ restaurants }) {
     return (
         <div className='inline-flex flex-col md:flex-row bg-rose-300 justify-center p-5 rounded-xl shadow-2xl' onMouseLeave={() => setIndex(null)}>
             <Map points={restaurants} idx={index}/>
-            <div className='overflow-auto max-h-80 w-80 grid grid-cols-1 md:px-5'>
+            <div className='overflow-auto h-[30rem] w-80 grid grid-cols-1 md:px-5'>
                 {
                     restaurants.map((r, i) => renderItem(i, r))
                 }
