@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 
 import { useCollection } from "react-firebase-hooks/firestore"
 import { logEvent } from "firebase/analytics";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { RegionDropdown } from "react-country-region-selector";
 import { analytics, db } from "../firebase/clientApp";
 
@@ -16,63 +16,54 @@ import mapview from '../public/phone_images/mapview-phone.png';
 import { collection } from "firebase/firestore";
 import TextTransition, { presets } from "react-text-transition";
 import { startCase } from "lodash";
+import { RegionContext, RegionProvider } from "../contexts/RegionProvider";
 
 export default function Home() {
   return (
-    <Layout>
-      <TextHeader />
-      <div className="flex flex-col md:flex-row md:justify-center">
-        {/* Left column */}
-        <div className="px-10 py-2 md:mr-48">
-          <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72" />
-        </div>
+      <Layout>
+        <TextHeader />
+        <div className="flex flex-col md:flex-row md:justify-center">
+          {/* Left column */}
+          <div className="px-10 py-2 md:mr-48">
+            <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72" />
+          </div>
 
-        {/* Right column */}
-        <div className="flex flex-col justify-center md:pl-4">
-          {/* <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" /> */}
-          <SignUpForm />
+          {/* Right column */}
+          <div className="flex flex-col justify-center md:pl-4">
+            {/* <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" /> */}
+            <SignUpForm />
+          </div>
         </div>
-      </div>
-      <Divider />
-      {/* Feature columns go here? */}
-      <ContentGrid />
-    </Layout>
+        <Divider />
+        {/* Feature columns go here? */}
+        <ContentGrid />
+      </Layout>
   )
 }
 
 const TextHeader = () => {
-  
+  const { regions } = useContext(RegionContext)
   const [index, setIndex] = useState(0);
   const [regionArray, setRegions] = useState(null)
   useEffect(() => {
-    const intervalId = setInterval(() =>{
-      setIndex(index => index + 1)},
+    const intervalId = setInterval(() => {
+      setIndex(index => index + 1)
+    },
       3000 // every 3 seconds
     );
     return () => clearTimeout(intervalId);
   }, [])
 
-  const [regions, loading, error] = useCollection(
-    collection(db, 'regions')
-  )
-
-  useEffect(() => {
-    if (regions) {
-      const t = regions.docs.map((doc) => startCase(doc.id))
-      setRegions(t)
-    }
-  }, [regions])
-
   return (
-    <div className="text-center my-2 md:my-4">
+    <div className="text-center my-2 md:my-4 z-1">
       {
-        regionArray ?
-        <div className="flex flex-col justify-center items-center">
-        <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants in: </text>
-        <text className="text-4xl font-semibold drop-shadow-xl text-center"><TextTransition springConfig={presets.wobbly}>{regionArray[index % regionArray.length]}</TextTransition></text>
-        </div>
-        
-        :<text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <text className="font-bold">Fast.</text></text>
+        regions ?
+          <div className="flex flex-col justify-center items-center">
+            <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants in: </text>
+            <text className="text-4xl font-semibold drop-shadow-xl text-center"><TextTransition springConfig={presets.wobbly}>{startCase(regions[index % regions.length])}</TextTransition></text>
+          </div>
+
+          : <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <text className="font-bold">Fast.</text></text>
       }
       <div className="font-light text-2xl">
         <text>Easy to use, no tracking.</text>
