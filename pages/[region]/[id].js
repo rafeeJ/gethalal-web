@@ -51,7 +51,9 @@ export default function RestaurantPage({ restaurant }) {
 
   return (
     <Layout head={<HeadContent restaurant={restaurant.name} />}>
-      <RestaurantCard restaurant={restaurant} />
+      <div className='flex justify-center'>
+        <RestaurantCard restaurant={restaurant} />
+      </div>
     </Layout>
   );
 }

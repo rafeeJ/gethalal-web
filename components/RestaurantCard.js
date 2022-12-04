@@ -5,6 +5,7 @@ import { FiXCircle, FiCheckCircle } from "react-icons/fi";
 import { chunk } from 'lodash';
 import { analytics } from '../firebase/clientApp';
 import { logEvent } from 'firebase/analytics';
+import { PulseButton } from './PulseButton';
 
 const Map = ({ marker }) => {
     const center = { lat: marker.lat, lng: marker.lng }
@@ -32,9 +33,9 @@ const CategoryRows = ({ categories }) => {
     const chunks = chunk(categories, 3);
     const chunkedViews = [];
 
-    chunks.forEach(chunk => {
+    chunks.forEach((chunk, idx) => {
         let row =
-            <div className='flex mb-1 justify-around'>
+            <div key={idx} className='flex mb-1 justify-around'>
                 {
                     chunk.map((cat, idx) => <Chip key={idx} title={cat} />)
                 }
@@ -85,22 +86,6 @@ const RestaurantInfo = ({ fullHalal, servesAlcohol }) => {
         </div>
     )
 };
-
-const PulseButton = ({className='', pulse=true, title, url, color='white', callback}) => {
-    return (
-        <a onClick={() => callback()}>
-        <div id="ping" className={`relative py-1 my-2`} >
-            { pulse ? <div className="absolute w-2 h-2 -right-0.5 top-0.5">
-                <div className="w-2 h-2 bg-red-400 animate-ping absolute rounded-full"></div>
-                <div className="w-2 h-2 bg-red-500 absolute rounded-full"></div>
-            </div> : <></>}
-            <div id="button" style={{backgroundColor: color}} className={`flex border rounded-lg shadow appearance-none ${className}`}>
-                <button  className="grow px-8 py-1">{title}</button>
-            </div>
-        </div>
-        </a>
-    )
-}
 
 const handleVisitWebsite = ( url, name ) => {
     window.open(url)
