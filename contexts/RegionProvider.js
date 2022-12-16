@@ -9,30 +9,27 @@ export const RegionContext = createContext({})
 export const RegionProvider = ({ children }) => {
     const [regions, setRegions] = useState(null)
 
-    const checkRegion = async () => {
-        const regions_temp = []
-            const regions_references = await getDocsFromServer(collection(db, 'regions'))
-            console.log(regions_references.docs)
-            regions_references.forEach((doc) => {
-                console.log(doc.id)
-                regions_temp.push(doc.id)
-            })
-        setRegions(regions_temp)
-    }
+    // get all regions from firestore and add to state
+    const [value, loading, error] = useCollectionOnce(
+        collection(db, 'regions'),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    )
 
     useEffect(() => {
-        if (!regions) {
-            checkRegion()
+        if (value) {
+            const regions_temp = []
+            value.forEach((doc) => {
+                regions_temp.push(doc.id)
+            })
+            setRegions(regions_temp)
         }
-    }, [regions])
+    }, [value])
 
     return(
         <RegionContext.Provider value={{regions}}>
             { children }
         </RegionContext.Provider>
-    )
-   
-
-
-   
+    )   
 }

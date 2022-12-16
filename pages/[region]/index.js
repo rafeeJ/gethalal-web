@@ -6,7 +6,7 @@ import React from 'react';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Layout from '../../components/Layout';
 import RegionCard from '../../components/RegionCard';
-import { db } from '../../firebase/clientApp';
+import { auth, db } from '../../firebase/clientApp';
 
 const HeadContent = ({ region }) => {
     const router = useRouter()
@@ -64,6 +64,8 @@ export default function Region({ restaurants }) {
 
 
 export const getServerSideProps = async ({ params }) => {
+    const token = await auth.currentUser.getIdToken(true)
+
     const region = params.region
 
     const rs = await getDocs(collection(db, `regions/${region}/restaurants`))
