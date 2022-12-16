@@ -64,20 +64,15 @@ export default function Region({ restaurants }) {
 
 
 export const getServerSideProps = async ({ params }) => {
-    const token = await auth.currentUser.getIdToken(true)
-
     const region = params.region
+    const response = await fetch(`https://europe-west2-halal-dining-uk.cloudfunctions.net/getRestaurantsForRegion?region=${region}`)
+    
+    const data = await response.json()
 
-    const rs = await getDocs(collection(db, `regions/${region}/restaurants`))
-    const restaurantData = []
-    rs.forEach((doc) => {
-        restaurantData.push(doc.data())
-    })
-
-    if (restaurantData) {
+    if (data) {
         return {
             props: {
-                restaurants: restaurantData
+                restaurants: data
             }
         }
     } else {

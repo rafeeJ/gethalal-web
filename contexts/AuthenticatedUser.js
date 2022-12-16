@@ -13,7 +13,6 @@ export const AuthenticatedUserProvider = ({ children }) => {
             // if user is null, then create an anonymous user
             if (!user) {
                 const cred = signInAnonymously(auth);
-                console.log("Anonymous user created", cred);
             }
             setUser(user);
             setLoading(false);

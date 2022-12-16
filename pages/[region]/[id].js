@@ -62,13 +62,13 @@ export const getServerSideProps = async ({ params }) => {
   const id = params.id
   const region = params.region
 
-  const r = doc(db, `regions/${region}/restaurants`, id)
-  const docSnap = await getDoc(r)
+  const response = await fetch(`https://europe-west2-halal-dining-uk.cloudfunctions.net/getRestaurantFromPlaceID?region=${region}&placeID=${id}`)
+  const data = await response.json()
 
-  if (docSnap.exists()) {
+  if (data) {
     return {
       props: {
-        restaurant: docSnap.data()
+        restaurant: data
       }
     }
   } else {
