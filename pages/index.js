@@ -59,11 +59,15 @@ const TextHeader = () => {
       {
         regions ?
           <div className="flex flex-col justify-center items-center">
-            <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants in: </text>
-            <text className="text-4xl font-semibold drop-shadow-xl text-center"><TextTransition springConfig={presets.wobbly}>{startCase(regions[index % regions.length])}</TextTransition></text>
+            <div className="text-4xl font-semibold">
+              Find halal restaurants, in:
+              <div className="font-bold mb-2 flex justify-center">
+              <TextTransition springConfig={presets.wobbly}>{startCase(regions[index % regions.length])}</TextTransition>
+            </div>
+              </div>
           </div>
 
-          : <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <text className="font-bold">Fast.</text></text>
+          : <div className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <div className="font-bold">Fast.</div></div>
       }
       <div className="font-light text-2xl">
         <text>Easy to use, no tracking.</text>
