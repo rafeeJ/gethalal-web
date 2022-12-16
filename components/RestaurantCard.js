@@ -2,10 +2,11 @@ import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 import React from 'react';
 import CardButton from './CardButton';
 import { FiXCircle, FiCheckCircle } from "react-icons/fi";
-import { chunk } from 'lodash';
+import { chunk, startCase } from 'lodash';
 import { analytics } from '../firebase/clientApp';
 import { logEvent } from 'firebase/analytics';
 import { PulseButton } from './PulseButton';
+import { useRouter } from 'next/router';
 
 const Map = ({ marker }) => {
     const center = { lat: marker.lat, lng: marker.lng }
@@ -104,11 +105,15 @@ const handleVisitApp = ( url ) => {
 }
 
 export default function RestaurantCard({ restaurant }) {
+    const router = useRouter()
+    const {
+        query: { region },
+    } = router;
+
     return (
         <div className='inline-flex flex-col md:flex-row bg-white justify-center p-5 rounded-xl shadow-2xl'>
             <Map marker={restaurant?.geometry?.location} />
             <div className='w-80 bg-white p-4 my-auto'>
-
                 <h1 className='font-serif text-xl text-center'>{restaurant?.name}</h1>
                 <RestaurantInfo fullHalal={restaurant?.fullHalal} servesAlcohol={restaurant?.servesAlcohol} />
                 <CategoryRows categories={restaurant?.categories} />
@@ -116,6 +121,7 @@ export default function RestaurantCard({ restaurant }) {
                 <PulseButton title='Visit their Website' pulse={false} callback={() => handleVisitWebsite(restaurant.website, restaurant?.name)}/> : <></>
             }
                 <PulseButton title='Find out more in the app' color={'#84AF83'} callback={() => handleVisitApp('https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257')}/>
+                <PulseButton title={`⇦ Back to ${startCase(region)}`} pulse={false} callback={() => router.push(`/${region}`)} />
             </div>
         </div>
     )
