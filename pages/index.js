@@ -1,11 +1,11 @@
 import Image from "next/future/image";
 import Layout from "../components/Layout";
 
-
+import { useCollection } from "react-firebase-hooks/firestore"
 import { logEvent } from "firebase/analytics";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { RegionDropdown } from "react-country-region-selector";
-import { analytics } from "../firebase/clientApp";
+import { analytics, db } from "../firebase/clientApp";
 
 import ReactStoreBadges from "react-store-badges"
 
@@ -13,35 +13,62 @@ import filterview from '../public/phone_images/filterview-phone.png';
 import listview from '../public/phone_images/listview-phone.png';
 import locationview from '../public/phone_images/locationview-phone.png';
 import mapview from '../public/phone_images/mapview-phone.png';
+import { collection } from "firebase/firestore";
+import TextTransition, { presets } from "react-text-transition";
+import { startCase } from "lodash";
+import { RegionContext, RegionProvider } from "../contexts/RegionProvider";
 
 export default function Home() {
   return (
-    <Layout>
-      <TextHeader />
-      <div className="flex flex-col md:flex-row md:justify-center">
-        {/* Left column */}
-        <div className="px-10 py-2 md:mr-48">
-          <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72" />
-        </div>
+      <Layout>
+        <TextHeader />
+        <div className="flex flex-col md:flex-row md:justify-center">
+          {/* Left column */}
+          <div className="px-10 py-2 md:mr-48">
+            <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72" />
+          </div>
 
-        {/* Right column */}
-        <div className="flex flex-col justify-center md:pl-4">
-          {/* <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" /> */}
-          <SignUpForm />
+          {/* Right column */}
+          <div className="flex flex-col justify-center md:pl-4">
+            {/* <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" /> */}
+            <SignUpForm />
+          </div>
         </div>
-      </div>
-      <Divider />
-      {/* Feature columns go here? */}
-      <ContentGrid />
-    </Layout>
+        <Divider />
+        {/* Feature columns go here? */}
+        <ContentGrid />
+      </Layout>
   )
 }
 
 const TextHeader = () => {
+  const { regions } = useContext(RegionContext)
+  const [index, setIndex] = useState(0);
+  const [regionArray, setRegions] = useState(null)
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIndex(index => index + 1)
+    },
+      3000 // every 3 seconds
+    );
+    return () => clearTimeout(intervalId);
+  }, [])
+
   return (
-    <div className="text-center my-2 md:my-4">
-      <text className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <text className="font-bold">Fast.</text></text>
-      <br />
+    <div className="text-center my-2 md:my-4 z-1">
+      {
+        regions ?
+          <div className="flex flex-col justify-center items-center">
+            <div className="text-4xl font-semibold">
+              Find halal restaurants, in:
+              <div className="font-bold mb-2 flex justify-center">
+              <TextTransition springConfig={presets.wobbly}>{startCase(regions[index % regions.length])}</TextTransition>
+            </div>
+              </div>
+          </div>
+
+          : <div className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <div className="font-bold">Fast.</div></div>
+      }
       <div className="font-light text-2xl">
         <text>Easy to use, no tracking.</text>
         <br />
@@ -105,10 +132,10 @@ const SignUpForm = () => {
       <div className="flex flex-col my-4">
         <text className="text-xl md:text-3xl font-semibold">GetHalal is available now!</text>
         <div className="flex md:py-2 md:mb-5 justify-center md:justify-start" onClick={() => logEvent(analytics, 'app_link_clicked')}>
-        <ReactStoreBadges 
-        platform={'ios'}
-        url={'https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257'}
-        locale={'en-us'}/>
+          <ReactStoreBadges
+            platform={'ios'}
+            url={'https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257'}
+            locale={'en-us'} />
         </div>
         <text >Stay in the loop! Sign up to our mailing list.</text>
         <input
@@ -127,10 +154,10 @@ const SignUpForm = () => {
           <text>Share your region and we can make sure to gather restaurants near you.<br /> <text className="font-semibold"> (This is optional.)</text></text>
         </div>
         <RegionDropdown
-        className="shadow border rounded md:w-2/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
-        country="United Kingdom"
-        value={region}
-        onChange={(val) => setRegion(val)}/>
+          className="shadow border rounded md:w-2/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+          country="United Kingdom"
+          value={region}
+          onChange={(val) => setRegion(val)} />
       </div>
 
       <div className="font-mono mt-2">
@@ -138,14 +165,14 @@ const SignUpForm = () => {
           ? errorMessage
           : `We will only send emails when there are new updates. No spam.`}
       </div>
-      <a className="flex" type="submit" style={{WebkitAppearance: 'none', Appearance: 'none', MozAppearance: 'none'}}>
-        <PulseButton title="Submit" className="bg-yellow-200"/>
+      <a className="flex" type="submit" style={{ WebkitAppearance: 'none', Appearance: 'none', MozAppearance: 'none' }}>
+        <PulseButton title="Submit" className="bg-yellow-200" />
       </a>
     </form>
   )
 }
 
-const PulseButton = ({ title, className, type}) => {
+const PulseButton = ({ title, className, type }) => {
   return (
     <div id="ping" className={`relative py-1 my-4`}>
       {/* <div className="absolute w-2 h-2 -right-0.5 top-0.5">
