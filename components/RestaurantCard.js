@@ -71,7 +71,7 @@ const RestaurantInfo = ({ fullHalal, servesAlcohol }) => {
             <div className='flex flex-col justify-center'>
                 <text>Serves Alcohol</text>
                 <div className='mx-auto'>
-                    <IconWrapper isPositive={!servesAlcohol} color={servesAlcohol ? 'green' : 'orange'} />
+                    <IconWrapper isPositive={servesAlcohol} color={!servesAlcohol ? 'green' : 'orange'} />
                 </div>
             </div>
 
@@ -80,7 +80,7 @@ const RestaurantInfo = ({ fullHalal, servesAlcohol }) => {
             <div className='flex flex-col justify-center align-middle'>
                 <text>Fully Halal Menu</text>
                 <div className='mx-auto'>
-                    <IconWrapper isPositive={!fullHalal} color={fullHalal ? 'orange' : 'green'} />
+                    <IconWrapper isPositive={fullHalal} color={!fullHalal ? 'orange' : 'green'} />
                 </div>
             </div>
 
@@ -88,9 +88,9 @@ const RestaurantInfo = ({ fullHalal, servesAlcohol }) => {
     )
 };
 
-const handleVisitWebsite = ( url, name ) => {
+const handleVisitWebsite = (url, name) => {
     window.open(url)
-    
+
     logEvent(analytics, "visit_restaurant_website", {
         restaurant: name,
         url: url,
@@ -98,7 +98,7 @@ const handleVisitWebsite = ( url, name ) => {
     })
 }
 
-const handleVisitApp = ( url ) => {
+const handleVisitApp = (url) => {
     window.open(url)
 
     logEvent(analytics, "visit_ios_listing")
@@ -117,10 +117,10 @@ export default function RestaurantCard({ restaurant }) {
                 <h1 className='font-serif text-xl text-center'>{restaurant?.name}</h1>
                 <RestaurantInfo fullHalal={restaurant?.fullHalal} servesAlcohol={restaurant?.servesAlcohol} />
                 <CategoryRows categories={restaurant?.categories} />
-                { restaurant.website ? 
-                <PulseButton title='Visit their Website' pulse={false} callback={() => handleVisitWebsite(restaurant.website, restaurant?.name)}/> : <></>
-            }
-                <PulseButton title='Find out more in the app' color={'#84AF83'} callback={() => handleVisitApp('https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257')}/>
+                {restaurant.website ?
+                    <PulseButton title='Visit their Website' pulse={false} callback={() => handleVisitWebsite(restaurant.website, restaurant?.name)} /> : <></>
+                }
+                <PulseButton title='Find out more in the app' color={'#84AF83'} callback={() => handleVisitApp('https://apps.apple.com/gb/app/gethalal-halal-food-near-you/id1637426257')} />
                 <PulseButton title={`⇦ Back to ${startCase(region)}`} pulse={false} callback={() => router.push(`/${region}`)} />
             </div>
         </div>
