@@ -1,4 +1,3 @@
-import { collection, getDocs } from 'firebase/firestore';
 import { startCase } from 'lodash';
 import Head from "next/head";
 import { useRouter } from 'next/router';
@@ -6,7 +5,6 @@ import React from 'react';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Layout from '../../components/Layout';
 import RegionCard from '../../components/RegionCard';
-import { auth, db } from '../../firebase/clientApp';
 
 const HeadContent = ({ region }) => {
     const router = useRouter()

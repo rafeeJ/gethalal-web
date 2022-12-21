@@ -1,4 +1,3 @@
-import { doc, getDoc } from 'firebase/firestore';
 import { startCase } from 'lodash';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -6,7 +5,6 @@ import React from 'react';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Layout from '../../components/Layout';
 import RestaurantCard from '../../components/RestaurantCard';
-import { db } from '../../firebase/clientApp';
 
 const HeadContent = ({ restaurant }) => {
   const router = useRouter()
