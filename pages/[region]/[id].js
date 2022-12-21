@@ -58,7 +58,12 @@ export default function RestaurantPage({ restaurant }) {
   );
 }
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params, res }) => {
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=3600, stale-while-revalidate=600')
+
   const id = params.id
   const region = params.region
 

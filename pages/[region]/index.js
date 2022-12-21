@@ -63,10 +63,14 @@ export default function Region({ restaurants }) {
 }
 
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params, res }) => {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=3600, stale-while-revalidate=600')
+
     const region = params.region
     const response = await fetch(`https://europe-west2-halal-dining-uk.cloudfunctions.net/getRestaurantsForRegion?region=${region}`)
-    
+
     const data = await response.json()
 
     if (data) {
