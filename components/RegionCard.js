@@ -66,7 +66,7 @@ const Map = ({ points, selectedRestaurantID }) => {
 
                             })
                         }
-                    </GoogleMap> : <>ree</>
+                    </GoogleMap> : null
             }
         </div>
     )

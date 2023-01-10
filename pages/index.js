@@ -20,26 +20,30 @@ import { RegionContext, RegionProvider } from "../contexts/RegionProvider";
 
 export default function Home() {
   return (
-      <Layout>
-        <TextHeader />
-        <div className="flex flex-col md:flex-row md:justify-center">
-          {/* Left column */}
-          <div className="px-10 py-2 md:mr-48">
-            <Image src={mapview} alt="Screenshot of GetHalal" className="md:w-72" />
-          </div>
-
-          {/* Right column */}
-          <div className="flex flex-col justify-center md:pl-4">
-            {/* <Blurb className="break-words text-center md:text-left md:w-2/3 pt-6 md:pt-12 md:mb-8 self-center md:self-auto" /> */}
-            <SignUpForm />
-          </div>
-        </div>
-        <Divider />
-        {/* Feature columns go here? */}
-        <ContentGrid />
-      </Layout>
+    <Layout>
+      <TextHeader />
+      <GridLayout />
+      <Divider />
+      {/* Feature columns go here? */}
+      <ContentGrid />
+    </Layout>
   )
 }
+
+const GridLayout = () => {
+  // create a layout that uses css grid, with an image on the left and text on the right
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="flex flex-col justify-center items-center">
+        <Image src={mapview} alt="Screenshot of GetHalal" className="w-48 md:w-72" />
+      </div>
+      <div className="flex flex-col justify-center items-center">
+        <SignUpForm />
+      </div>
+    </div>
+  )
+}
+
 
 const TextHeader = () => {
   const { regions } = useContext(RegionContext)
@@ -62,9 +66,9 @@ const TextHeader = () => {
             <div className="text-4xl font-semibold">
               Find halal restaurants, in:
               <div className="font-bold mb-2 flex justify-center">
-              <TextTransition springConfig={presets.wobbly}>{startCase(regions[index % regions.length])}</TextTransition>
-            </div>
+                <TextTransition springConfig={presets.wobbly}>{startCase(regions[index % regions.length])}</TextTransition>
               </div>
+            </div>
           </div>
 
           : <div className="text-4xl font-semibold drop-shadow-xl">Find halal restaurants. <div className="font-bold">Fast.</div></div>
@@ -175,10 +179,6 @@ const SignUpForm = () => {
 const PulseButton = ({ title, className, type }) => {
   return (
     <div id="ping" className={`relative py-1 my-4`}>
-      {/* <div className="absolute w-2 h-2 -right-0.5 top-0.5">
-        <div className="w-2 h-2 bg-red-400 animate-ping absolute rounded-full"></div>
-        <div className="w-2 h-2 bg-red-500 absolute rounded-full"></div>
-      </div> */}
       <div id="button" className={`flex border rounded-lg shadow appearance-none ${className}`}>
         <button className="grow px-8 py-1">{title}</button>
       </div>
