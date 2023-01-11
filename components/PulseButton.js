@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const PulseButton = ({ className = '', pulse = true, title, url, color = 'white', callback }) => {
+export const PulseButton = ({ type = undefined, className = '', pulse = true, title, url, color = 'white', callback }) => {
     return (
         <a onClick={() => callback()}>
             <div id="ping" className={`relative py-1`} >
@@ -9,7 +9,7 @@ export const PulseButton = ({ className = '', pulse = true, title, url, color = 
                     <div className="w-2 h-2 bg-red-500 absolute rounded-full"></div>
                 </div> : <></>}
                 <div id="button" style={{ backgroundColor: color }} className={`flex border rounded-lg shadow appearance-none ${className}`}>
-                    <button className="grow px-8 py-1">{title}</button>
+                    <button type={type} className="grow px-8 py-1">{title}</button>
                 </div>
             </div>
         </a>
